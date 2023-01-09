@@ -1,0 +1,20 @@
+{
+  "name": "swag-order-server",
+  "version": "0.1.0",
+  "description": "server for swag order front end",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "worktop build src/index.js",
+    "deploy": "wrangler publish",
+    "deploy:dev": "wrangler publish --env dev"
+  },
+  "devDependencies": {
+    "worktop.build": "^0.0.5",
+    "wrangler": "^2.6.2"
+  },
+  "dependencies": {
+    "faunadb": "^4.7.1",
+    "worktop": "^0.7.3"
+  }
+}
