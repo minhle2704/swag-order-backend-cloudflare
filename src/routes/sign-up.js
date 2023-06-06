@@ -2,10 +2,10 @@ import bcrypt from "bcryptjs";
 
 import { addRoute, RESPONSE_HEADERS } from "../helpers/routeHelpers.js";
 import {
+  faunaClient,
   Collection,
   Create,
   Exists,
-  faunaClient,
   If,
   Index,
   Match,
@@ -40,6 +40,7 @@ export const addRouteSignUp = () =>
       );
 
       if (result) {
+        delete result.data.password;
         response.send(200, result.data, RESPONSE_HEADERS);
       } else {
         response.send(401, null, RESPONSE_HEADERS);

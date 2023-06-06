@@ -11,6 +11,7 @@ export const addRouteLogin = () =>
         Get(Match(Index("unique_username"), username))
       );
       if (user && bcrypt.compareSync(password, user.data.password)) {
+        delete user.data.password;
         response.send(200, user.data, RESPONSE_HEADERS);
       } else {
         response.send(401, null, RESPONSE_HEADERS);
