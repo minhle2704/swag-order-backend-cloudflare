@@ -1,14 +1,25 @@
 import bcrypt from "bcryptjs";
 
 import { addRoute, RESPONSE_HEADERS } from "../helpers/routeHelpers.js";
-import { faunaClient, Get, Index, Match } from "../helpers/faunaHelpers.js";
+import {
+  faunaClient,
+  Exists,
+  Get,
+  If,
+  Index,
+  Match,
+} from "../helpers/faunaHelpers.js";
 
 export const addRouteLogin = () =>
   addRoute("POST", "/login", async (request, response) => {
     try {
       const { username, password } = await request.body();
       const user = await faunaClient.query(
-        Get(Match(Index("unique_username"), username))
+        If(
+          Exists(Match(Index("unique_username"), username)),
+          Get(Match(Index("unique_username"), username)),
+          null
+        )
       );
       if (user && bcrypt.compareSync(password, user.data.password)) {
         delete user.data.password;
